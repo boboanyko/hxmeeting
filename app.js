@@ -295,7 +295,7 @@ app.get('/admin', (req, res) => {
 // 生成二维码
 app.get('/api/qrcode', async (req, res) => {
   try {
-    const submitURL = `http://${DOMAIN}:${PORT}/submit`;
+    const submitURL = `https://${DOMAIN}/submit`;
     const qrDataUrl = await QRCode.toDataURL(submitURL, {
       width: 256,
       margin: 2,
