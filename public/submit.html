@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>信息填写 - 互动目标展示系统</title>
+    <link rel="stylesheet" href="/styles/submit.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 头部 -->
+        <header class="header">
+            <div class="header-content">
+                <h1>🎯 目标挑战</h1>
+                <p class="subtitle">填写您的目标信息，参与排行榜竞争！</p>
+            </div>
+        </header>
+
+        <!-- 主要内容 -->
+        <main class="main-content">
+            <div class="form-container">
+                <!-- 进度指示器 -->
+                <div class="progress-indicator">
+                    <div class="step active" data-step="1">
+                        <div class="step-number">1</div>
+                        <div class="step-title">基本信息</div>
+                    </div>
+                    <div class="step-line"></div>
+                    <div class="step" data-step="2">
+                        <div class="step-number">2</div>
+                        <div class="step-title">目标金额</div>
+                    </div>
+                    <div class="step-line"></div>
+                    <div class="step" data-step="3">
+                        <div class="step-number">✓</div>
+                        <div class="step-title">完成提交</div>
+                    </div>
+                </div>
+
+                <!-- 表单区域 -->
+                <form id="submitForm" class="submit-form">
+                    <!-- 步骤1：基本信息 -->
+                    <div class="form-step active" data-step="1">
+                        <h2>📝 基本信息</h2>
+                        <div class="form-group">
+                            <label for="organization">
+                                <span class="required">*</span> 机构/公司名称
+                            </label>
+                            <input
+                                type="text"
+                                id="organization"
+                                name="organization"
+                                placeholder="请输入您的机构或公司名称"
+                                maxlength="50"
+                                required
+                                autocomplete="organization"
+                            />
+                            <div class="help-text">最多50个字符</div>
+                            <div class="error-message" id="organizationError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name">
+                                <span class="required">*</span> 您的姓名
+                            </label>
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                placeholder="请输入您的姓名"
+                                maxlength="20"
+                                required
+                                autocomplete="name"
+                            />
+                            <div class="help-text">最多20个字符</div>
+                            <div class="error-message" id="nameError"></div>
+                        </div>
+
+                        <div class="button-group">
+                            <button type="button" class="next-btn" data-action="next-step">
+                                下一步 →
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 步骤2：目标金额 -->
+                    <div class="form-step" data-step="2">
+                        <h2>💰 目标金额</h2>
+                        <div class="form-group">
+                            <label for="target">
+                                <span class="required">*</span> 目标金额（万元）
+                            </label>
+                            <div class="input-group">
+                                <span class="input-prefix">¥</span>
+                                <input
+                                    type="number"
+                                    id="target"
+                                    name="target"
+                                    placeholder="0.00"
+                                    step="0.01"
+                                    min="0.01"
+                                    max="999999.99"
+                                    required
+                                    autocomplete="off"
+                                />
+                            </div>
+                            <div class="help-text">请输入大于0的金额，单位为万元，最大999,999.99万元</div>
+                            <div class="error-message" id="targetError"></div>
+                        </div>
+
+
+                        <div class="button-group">
+                            <button type="button" class="prev-btn" data-action="prev-step">
+                                ← 上一步
+                            </button>
+                            <button type="button" class="next-btn" data-action="next-step">
+                                下一步 →
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 步骤3：确认提交 -->
+                    <div class="form-step" data-step="3">
+                        <h2>📋 确认信息</h2>
+                        <div class="summary">
+                            <div class="summary-item">
+                                <span class="label">机构名称：</span>
+                                <span class="value" id="summaryOrg">--</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="label">姓名：</span>
+                                <span class="value" id="summaryName">--</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="label">目标金额：</span>
+                                <span class="value highlight" id="summaryTarget">--</span>
+                            </div>
+                        </div>
+
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="confirmCheckbox" required>
+                                <span>我确认以上信息准确无误，同意参与本次活动</span>
+                            </label>
+                        </div>
+
+                        <div class="button-group">
+                            <button type="button" class="prev-btn" data-action="prev-step">
+                                ← 上一步
+                            </button>
+                            <button type="submit" class="submit-btn" id="submitBtn">
+                                提交信息
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- 提交状态 -->
+                <div class="submit-status" id="submitStatus" style="display: none;">
+                    <div class="status-icon" id="statusIcon">✅</div>
+                    <h3 id="statusTitle">提交成功！</h3>
+                    <p id="statusMessage">您的信息已成功提交，请在现场大屏查看排行榜。</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- 底部信息 -->
+        <footer class="footer">
+            <div class="footer-content">
+                <p>💡 温馨提示：请确保填写信息准确，提交后可在现场大屏查看实时排名</p>
+                <div class="stats">
+                    <span id="participantCount">当前参与人数：加载中...</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- 加载遮罩 -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">正在提交...</div>
+    </div>
+
+    <!-- 通知提示 -->
+    <div class="notification" id="notification"></div>
+
+    <!-- 重复确认对话框 -->
+    <div class="duplicate-confirm-modal" id="duplicateConfirmModal" style="display: none;">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>⚠️ 检测到重复人员</h3>
+                <button type="button" class="modal-close" data-action="close-duplicate-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="duplicate-info">
+                    <p><strong>机构：</strong><span id="duplicateOrg"></span></p>
+                    <p><strong>姓名：</strong><span id="duplicateName"></span></p>
+                </div>
+                <div class="amount-comparison">
+                    <div class="current-amount">
+                        <label>当前金额：</label>
+                        <span id="currentAmount" class="amount-value"></span>
+                    </div>
+                    <div class="arrow-icon">→</div>
+                    <div class="new-amount">
+                        <label>新金额：</label>
+                        <span id="newAmount" class="amount-value highlight"></span>
+                    </div>
+                </div>
+                <div class="warning-message">
+                    <p>⚠️ 该人员已存在，继续操作将覆盖当前金额，请谨慎操作！</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-action="close-duplicate-modal">
+                    取消
+                </button>
+                <button type="button" class="btn btn-primary" data-action="confirm-overwrite">
+                    确认覆盖
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/scripts/submit.js"></script>
+</body>
+</html>

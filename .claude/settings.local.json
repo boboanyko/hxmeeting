@@ -1,0 +1,39 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cat:*)",
+      "Bash(mkdir:*)",
+      "Bash(npm install)",
+      "Bash(npm run dev:*)",
+      "Bash(mvn test:*)",
+      "Skill(excel-data-processor)",
+      "Skill(prd-generator)",
+      "Skill(document-skills:xlsx)",
+      "Skill(document-skills:docx)",
+      "Skill(document-skills:pptx)",
+      "Skill(document-skills:pdf)",
+      "Skill(example-skills:skill-creator)",
+      "Skill(product-manager)",
+      "Skill(backend-engineer)",
+      "Skill(frontend-engineer)",
+      "Skill(system-architect)",
+      "Skill(system-tester)",
+      "Bash(dir:*)",
+      "Bash(mvn:*)",
+      "Bash(where mvn:*)",
+      "Bash(done)",
+      "Skill(pdf)",
+      "Bash(ls:*)",
+      "Bash(env)",
+      "Bash(tree:*)",
+      "Skill(skill-creator)",
+      "Bash(python:*)",
+      "Bash(lsof:*)",
+      "Bash(xargs:*)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>互动目标展示系统</title>
+    <link rel="stylesheet" href="/styles/display.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 头部信息 -->
+        <header class="header">
+            <div class="title">
+                <h1>🎯 目标挑战排行榜</h1>
+                <div class="stats">
+                    <span class="total-count">总参与人数: <span id="totalCount">0</span></span>
+                    <span class="last-update">最后更新: <span id="lastUpdate">--:--:--</span></span>
+                </div>
+            </div>
+        </header>
+
+        <!-- 主要内容区域 -->
+        <main class="main-content">
+            <!-- 前三名特殊展示 -->
+            <div class="top-three">
+                <div class="top-card second-place" data-rank="2">
+                    <div class="crown">🥈</div>
+                    <div class="rank">第2名</div>
+                    <div class="name" id="secondName">--</div>
+                    <div class="organization" id="secondOrg">--</div>
+                    <div class="target" id="secondTarget">--</div>
+                </div>
+                <div class="top-card first-place" data-rank="1">
+                    <div class="crown">👑</div>
+                    <div class="rank">第1名</div>
+                    <div class="name" id="firstName">--</div>
+                    <div class="organization" id="firstOrg">--</div>
+                    <div class="target" id="firstTarget">--</div>
+                </div>
+                <div class="top-card third-place" data-rank="3">
+                    <div class="crown">🥉</div>
+                    <div class="rank">第3名</div>
+                    <div class="name" id="thirdName">--</div>
+                    <div class="organization" id="thirdOrg">--</div>
+                    <div class="target" id="thirdTarget">--</div>
+                </div>
+            </div>
+
+            <!-- 其他参与者列表 -->
+            <div class="participants-list">
+                <div class="list-header">
+                    <h2>📊 参与者榜单</h2>
+                    <button class="refresh-btn" onclick="manualRefresh()">🔄 刷新</button>
+                </div>
+                <div class="list-container">
+                    <table class="participants-table">
+                        <thead>
+                            <tr>
+                                <th>排名</th>
+                                <th>姓名</th>
+                                <th>机构</th>
+                                <th>目标金额</th>
+                                <th>提交时间</th>
+                            </tr>
+                        </thead>
+                        <tbody id="participantsTableBody">
+                            <tr class="empty-state">
+                                <td colspan="5" class="empty-message">
+                                    暂无参与者数据，等待用户提交...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+
+        <!-- 底部状态栏 -->
+        <footer class="footer">
+            <div class="connection-status">
+                <span id="connectionStatus">🔴 连接状态: 断开</span>
+                <span id="serverTime">服务器时间: --:--:--</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- 加载动画 -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">正在连接服务器...</div>
+    </div>
+
+    <!-- 通知提示 -->
+    <div class="notification" id="notification"></div>
+
+    <script src="/scripts/display.js"></script>
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理后台 - 互动目标展示系统</title>
+    <link rel="stylesheet" href="/styles/admin.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 头部 -->
+        <header class="header">
+            <div class="header-content">
+                <h1>🔧 管理后台</h1>
+                <div class="status-indicator" id="serverStatus">
+                    <span class="status-dot"></span>
+                    <span class="status-text">检查中...</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- 主要内容 -->
+        <main class="main-content">
+            <!-- 系统统计 -->
+            <section class="stats-section">
+                <h2>📊 系统统计</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-info">
+                            <div class="stat-number" id="participantCount">--</div>
+                            <div class="stat-label">参与人数</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📡</div>
+                        <div class="stat-info">
+                            <div class="stat-number" id="wsConnections">--</div>
+                            <div class="stat-label">WebSocket连接</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">💾</div>
+                        <div class="stat-info">
+                            <div class="stat-number" id="memoryUsage">--</div>
+                            <div class="stat-label">内存使用</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">⏱️</div>
+                        <div class="stat-info">
+                            <div class="stat-number" id="uptime">--</div>
+                            <div class="stat-label">运行时间</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 管理操作 -->
+            <section class="actions-section">
+                <h2>🎮 管理操作</h2>
+                <div class="actions-grid">
+                    <div class="action-card danger">
+                        <div class="action-icon">🗑️</div>
+                        <div class="action-info">
+                            <h3>清空数据</h3>
+                            <p>清除所有参与者数据，重新开始活动</p>
+                        </div>
+                        <button class="action-btn danger-btn" data-action="clear-all-data">
+                            清空数据
+                        </button>
+                    </div>
+
+                    <div class="action-card">
+                        <div class="action-icon">📥</div>
+                        <div class="action-info">
+                            <h3>导出数据</h3>
+                            <p>导出当前所有参与者数据为Excel文件</p>
+                        </div>
+                        <button class="action-btn" data-action="export-data">
+                            导出Excel
+                        </button>
+                    </div>
+
+                    <div class="action-card">
+                        <div class="action-icon">🔄</div>
+                        <div class="action-info">
+                            <h3>刷新统计</h3>
+                            <p>刷新系统统计数据</p>
+                        </div>
+                        <button class="action-btn" data-action="refresh-stats">
+                            刷新数据
+                        </button>
+                    </div>
+
+                    <div class="action-card">
+                        <div class="action-icon">📊</div>
+                        <div class="action-info">
+                            <h3>查看详情</h3>
+                            <p>查看参与者详细信息</p>
+                        </div>
+                        <button class="action-btn" data-action="show-participants">
+                            查看列表
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 参与者列表 -->
+            <section class="participants-section" id="participantsSection" style="display: none;">
+                <div class="section-header">
+                    <h2>📋 参与者列表</h2>
+                    <button class="close-btn" data-action="hide-participants">✕</button>
+                </div>
+                <div class="participants-table-container">
+                    <table class="participants-table">
+                        <thead>
+                            <tr>
+                                <th>排名</th>
+                                <th>姓名</th>
+                                <th>机构</th>
+                                <th>目标金额</th>
+                                <th>提交时间</th>
+                            </tr>
+                        </thead>
+                        <tbody id="participantsTableBody">
+                            <tr class="loading">
+                                <td colspan="5">正在加载...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 系统日志 -->
+            <section class="logs-section">
+                <div class="section-header">
+                    <h2>📜 系统日志</h2>
+                    <button class="clear-btn" data-action="clear-logs">清空日志</button>
+                </div>
+                <div class="logs-container">
+                    <div class="logs-filters">
+                        <select id="logLevel" data-action="filter-logs" onchange="window.adminPanel.filterLogs()">
+                            <option value="all">所有级别</option>
+                            <option value="info">信息</option>
+                            <option value="warn">警告</option>
+                            <option value="error">错误</option>
+                        </select>
+                    </div>
+                    <div class="logs-content" id="logsContent">
+                        <div class="log-entry info">
+                            <span class="timestamp">2024-01-01 00:00:00</span>
+                            <span class="level">INFO</span>
+                            <span class="message">系统启动完成</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- 快速链接 -->
+        <section class="quick-links">
+            <h2>🚀 快速链接</h2>
+            <div class="links-grid">
+                <a href="/" target="_blank" class="link-card">
+                    <div class="link-icon">🖥️</div>
+                    <div class="link-info">
+                        <h3>大屏展示</h3>
+                        <p>查看实时排行榜</p>
+                    </div>
+                </a>
+                <a href="/submit" target="_blank" class="link-card">
+                    <div class="link-icon">📝</div>
+                    <div class="link-info">
+                        <h3>数据收集</h3>
+                        <p>填写信息页面</p>
+                    </div>
+                </a>
+                <a href="/api/qrcode" target="_blank" class="link-card">
+                    <div class="link-icon">📱</div>
+                    <div class="link-info">
+                        <h3>二维码</h3>
+                        <p>获取提交二维码</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- 底部信息 -->
+        <footer class="footer">
+            <div class="footer-content">
+                <p>互动目标展示系统 - 管理后台</p>
+                <div class="system-info">
+                    <span id="currentTime"></span>
+                    <span>|</span>
+                    <span id="systemVersion">v1.0.0</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- 确认对话框 -->
+    <div class="modal-overlay" id="modalOverlay" style="display: none;">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="modalTitle">确认操作</h3>
+                <button class="modal-close" data-action="close-modal">✕</button>
+            </div>
+            <div class="modal-body">
+                <p id="modalMessage">确定要执行此操作吗？</p>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn cancel" data-action="close-modal">取消</button>
+                <button class="modal-btn confirm" id="modalConfirm">确认</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 加载遮罩 -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">处理中...</div>
+    </div>
+
+    <!-- 通知提示 -->
+    <div class="notification" id="notification"></div>
+
+    <script src="/scripts/admin.js"></script>
+</body>
+</html>
